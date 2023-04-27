@@ -22,6 +22,7 @@ model Usuario {
   correo      String       @unique
   password    String
   tipoUsuario TIPO_USUARIO @default(CLIENTE) @map("tipo_usuario")
+
   pedidos     Pedido[]     
   @@map("usuarios")
 }
