@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TIPO_USUARIO {
+  ADMIN
+  CLIENTE
+}
+
+model Usuario {
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  apellido    String
+  correo      String       @unique
+  password    String
+  tipoUsuario TIPO_USUARIO @default(CLIENTE) @map("tipo_usuario")
+  pedidos     Pedido[]     
+  @@map("usuarios")
+}
+
+model Categoria {
+  id              Int          @id @default(autoincrement())
+  nombre          String
+  descripcion     String
+  productos       Producto[]
+  
+  @@map("categorias")
+}
+model Producto {
+  id           Int            @id @default(autoincrement())
+  nombre       String
+  precio       Float
+  stock        Int          
+  disponible   Boolean        @default(true)
+  descripcion  String
+  imagen       String
+  procedencia  String
+  categoria    Categoria      @relation(fields: [categoriaId], references: [id])
+  categoriaId  Int            @map("categoria_id")
+  pedidos     DetallePedido[]
+  @@map("productos")
+}
+
+model Pedido {
+  id            Int          @id @default(autoincrement())
+  status        String
+  fecha         DateTime
+  total         Int       
+  metodoPago    String
+  usuarios      Usuario         @relation(fields: [usuarioId], references: [id])
+  usuarioId     Int             @map("usuario_id")
+  detallePedidos     DetallePedido[]
+  @@map("pedidos")
+}
+
+model DetallePedido {
+  id            Int          @id @default(autoincrement())
+  cantidad      Float
+  pedido        Pedido         @relation(fields: [pedidoId], references: [id])
+  pedidoId     Int            @map("pedido_id")
+  producto      Producto       @relation(fields: [productoId], references: [id])
+  productoId   Int            @map("producto_id") 
+  //@@id([pedidoId, productoId])
+  @@map("detalle_pedidos")
+}
+
