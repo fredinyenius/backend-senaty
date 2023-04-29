@@ -1,0 +1,16 @@
+openapi: 3.0.0
+tags:
+name: productos
+description: API para productos
+path:
+/productos:
+get:
+ sumary: Muestra los productos disponibles disponibles
+ tags: [productos]
+ parameters:
+ in: header
+ name: token
+ type: string
+responses:
+  200:
+   description: Producto sobtenidos
