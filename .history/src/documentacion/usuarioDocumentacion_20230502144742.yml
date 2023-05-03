@@ -1,0 +1,89 @@
+openapi: 3.0.0
+tags:
+  name: User
+  description: API para interactura con los usuarios
+paths:
+  /registro:
+    post:
+    security:
+      - bearerAuth: []
+    tags: 
+      - user
+    summary: 'Crea un nueo usuario'  
+    requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+    responses:
+      '200':
+        description: Operación correcta
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'  
+      '422':
+        description: Error de validación
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error'
+      '500':
+        description: Error de servidor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error' 
+         
+  /login:
+    post:
+      summary: Autentica al usuario en la API
+      tags: [usuario]
+      operationID: login
+      requestBody:
+        description: Para poder hacer uso de este endpoint debe existir un usuario previamente registrado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        200:
+          description: El usuario ha sido autenticado
+          headers:
+            token:
+              description: El token sera utilizado para interactuar con endpoints protegidos
+              type: string
+        404:
+          description: El email no esta registrado
+        403:
+          description: La contraseña es incorrecta
+  
+parameters:
+    sortParam:
+      name: sort
+      in: query
+      description: "Realizar ordenacion"
+      example: "+fecha -nombre"
+      schema:
+        type: string
+        
+        
+    limitParam:
+      name: limit
+      in: query
+      description: "número de resultados"
+      example: 50
+      schema:
+        type: integer    
+    
+    
+    skipParam:
+      name: skip
+      in: query
+      description: "número del que partir"
+      example: 50
+      schema:
+        type: integer
+    

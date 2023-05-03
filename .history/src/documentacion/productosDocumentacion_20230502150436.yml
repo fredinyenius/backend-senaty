@@ -1,12 +1,10 @@
 openapi: 3.0.0
-Authorization: Bearer <token>
 tags:
   name: Productos
   description: API para interactura con los productos
 paths:
   /productos:
     get:
-      Authorization: Bearer <token>
       summary: Muestra las productos disponibles
       tags: [Product]
       parameters:
@@ -79,18 +77,21 @@ paths:
           content: {}
 components:
   schemas:
-    postProducto:
+    registro:
       type: object
       properties:
-        name:
+         name:
           type: integer
           description: Nombre de la producto
         description:
           type: int
-          description: Descripcion de la producto
-    deleteProducto:
+          description: Mensaje del servidor
+    login:
       type: object
       properties:
-        id:
-          type: int
-          description: Id de producto
+          email:
+          type: string
+          format: email
+          password:
+          type: string
+    

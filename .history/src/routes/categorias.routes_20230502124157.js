@@ -6,5 +6,5 @@ export const categoriaRouter = Router();
 
 categoriaRouter.post("/categorias", validarToken, esAdmin, controllers.crearCategoria);
 categoriaRouter.get("/categorias", validarToken, esAdmin, controllers.listarCategoria);
-categoriaRouter.get("/categoria/:id", validarToken, esAdmin,controllers.devolverCategoria);
-categoriaRouter.delete("/categoria/:id", validarToken, esAdmin,controllers.eliminarCategoria);
+categoriaRouter.get("/categoria/:id", controllers.devolverCategoria);
+categoriaRouter.delete("/categoria/:id", controllers.eliminarCategoria);

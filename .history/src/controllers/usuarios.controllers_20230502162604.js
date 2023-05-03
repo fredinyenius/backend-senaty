@@ -65,12 +65,7 @@ export const loginUsuario = async (req, res) => {
 
 export const cerrarSesion = async (req, res) => {
   // agregarlo
-  const usuarios = await Prisma.usuario.findIdAndUpdate({token: null});
+  const usuarios = await Prisma.usuario.destroy();
   res.json(usuarios);
-  
-    return res.status(201).json({
-      content: usuarios,
-      message: "sesion cerrada",
-    });
 
 };

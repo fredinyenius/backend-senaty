@@ -1,15 +1,14 @@
 openapi: 3.0.0
-Authorization: Bearer <token>
 tags:
   name: Productos
   description: API para interactura con los productos
 paths:
   /productos:
     get:
-      Authorization: Bearer <token>
       summary: Muestra las productos disponibles
       tags: [Product]
       parameters:
+        - $ref: '#/components/parameters/token'
         - in: header
           name: token
           type: string
@@ -78,6 +77,14 @@ paths:
           description: "Internal Server Error."
           content: {}
 components:
+  parameters:
+    token:
+      in: header
+      name: token
+      description: Token de autenticaciÃ³n en API.
+      required: true
+      schema:
+        type: string
   schemas:
     postProducto:
       type: object

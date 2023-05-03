@@ -9,7 +9,9 @@ paths:
       tags: [User]
       operationID: profile
       parameters:
-      - $ref: '#/components/parameters/token'  
+        - in: header
+          name: token
+          type: string
       responses:
           200:
             description: Regresa los datos del usuario actual
@@ -55,7 +57,7 @@ paths:
           description: El email no esta registrado
         403:
           description: La contraseña es incorrecta
-  /cerrarSesion:
+  /user/logout:
     put:
       summary: Finaliza la sesion actual del usuario
       tags: [User]
@@ -68,14 +70,6 @@ paths:
         200:
           description: Actualiza el token del usuario a null
 components:
-  parameters:
-    token:
-      in: header
-      name: token
-      description: Token de autenticacion en API.
-      required: true
-      schema:
-        type: string
   schemas:
     serverResponse:
       type: object

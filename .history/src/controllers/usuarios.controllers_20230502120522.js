@@ -18,12 +18,6 @@ export const registroUsuario = async (req, res) => {
     res.status(500).json({ message: "Error al crear el usuario" })
   }
 };
-export const listarUsuarios = async (req, res) => {
-  // agregarlo
-  const usuarios = await Prisma.usuario.findMany();
-  res.json(usuarios);
-
-};
 
 export const loginUsuario = async (req, res) => {
   const { correo, password } = req.body;
@@ -61,16 +55,4 @@ export const loginUsuario = async (req, res) => {
       content: error.message,
     });
   }
-};
-
-export const cerrarSesion = async (req, res) => {
-  // agregarlo
-  const usuarios = await Prisma.usuario.findIdAndUpdate({token: null});
-  res.json(usuarios);
-  
-    return res.status(201).json({
-      content: usuarios,
-      message: "sesion cerrada",
-    });
-
 };

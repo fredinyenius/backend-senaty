@@ -6,7 +6,6 @@ import { productoRouter } from "./routes/productos.routes.js";
 import { categoriaRouter } from "./routes/categorias.routes.js";
 import { imagenRouter } from "./routes/imagenes.routes.js";
 import { pedidoRouter } from "./routes/pedidos.routes.js";
-import { enviarMailer } from "./nodemailer.js";
 import dotenv from "dotenv";
 
 // utilizando todas las variables definidas en el archivo .env como si fueran variables de entorno
@@ -25,7 +24,7 @@ const options = {
       },
       servers: [{
           url:"http://localhost:3000"
-      },
+      }
           
       ]
   },
@@ -41,7 +40,6 @@ const PORT = 3000;
 servidor.use(cors());
 servidor.use(express.json());
 
-//servidor.use(enviarMailer);
 servidor.use(usuarioRouter);
 servidor.use(productoRouter);
 servidor.use(categoriaRouter);

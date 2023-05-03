@@ -5,5 +5,4 @@ export const usuarioRouter = Router();
 
 usuarioRouter.post("/registro", controllers.registroUsuario);
 usuarioRouter.post("/login", controllers.loginUsuario);
-usuarioRouter.get("/listar", controllers.listarUsuarios);
-//usuarioRouter.put("/cerrarSesion", controllers.cerrarSesion);
+usuarioRouter.post("/listar", controllers.listarUsuarios);

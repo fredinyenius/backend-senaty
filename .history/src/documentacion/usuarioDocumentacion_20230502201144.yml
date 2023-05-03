@@ -72,7 +72,7 @@ components:
     token:
       in: header
       name: token
-      description: Token de autenticacion en API.
+      description: Token de autenticaciÃ³n en API.
       required: true
       schema:
         type: string

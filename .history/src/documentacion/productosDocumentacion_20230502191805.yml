@@ -6,7 +6,6 @@ tags:
 paths:
   /productos:
     get:
-      Authorization: Bearer <token>
       summary: Muestra las productos disponibles
       tags: [Product]
       parameters:

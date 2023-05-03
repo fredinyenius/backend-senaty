@@ -41,7 +41,7 @@ const PORT = 3000;
 servidor.use(cors());
 servidor.use(express.json());
 
-//servidor.use(enviarMailer);
+servidor.use(enviarMailer);
 servidor.use(usuarioRouter);
 servidor.use(productoRouter);
 servidor.use(categoriaRouter);
