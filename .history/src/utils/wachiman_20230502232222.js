@@ -65,7 +65,7 @@ export const esAdmin = async (req, res, next) => {
   next();
 };
 
-export const validarStock = async (req, res, next) => {
+//export const validarStock = async (req, res, next) => {
 //  const data = req.body;
 
 //  const producto = await Prisma.producto.
@@ -80,5 +80,5 @@ export const validarStock = async (req, res, next) => {
   //}
 
   next();
-}
+//}
  

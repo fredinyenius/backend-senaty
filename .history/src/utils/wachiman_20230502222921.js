@@ -65,20 +65,16 @@ export const esAdmin = async (req, res, next) => {
   next();
 };
 
-export const validarStock = async (req, res, next) => {
-//  const data = req.body;
+export const validarStock = async (req, res) => {
+  const data = req.body;
 
-//  const producto = await Prisma.producto.
-//  console.log("producto", producto)
- // if(!producto) {
- //   throw new Error("Producto no encontrado");
- // }
- // if (producto.stock < cantidad){
- //   throw new Error(`Insuficiente stock: solo hay ${producto.stock}`);
-
-    
-  //}
-
+  const producto = await Prisma.producto.findById(data)
+  if(!producto) {
+    throw new Error("Producto no encontrado");
+  }
+  if (producto.stock < cantidad){
+    throw new Error(`Insuficiente stock: solo hay ${producto.stock}`);
+  }
   next();
 }
  

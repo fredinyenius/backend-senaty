@@ -6,4 +6,4 @@ import { validarStock } from "../utils/wachiman.js";
 export const pedidoRouter = Router();
 
 pedidoRouter.post("/pedidos", validarStock, crearPedido);
-pedidoRouter.post("/detallePedidos",validarStock, crearDetallePedido);
+pedidoRouter.post("/detallePedidos",crearDetallePedido);

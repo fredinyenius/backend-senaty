@@ -66,10 +66,10 @@ export const esAdmin = async (req, res, next) => {
 };
 
 export const validarStock = async (req, res, next) => {
-//  const data = req.body;
+  const data = req.body;
 
-//  const producto = await Prisma.producto.
-//  console.log("producto", producto)
+  const producto = await Prisma.producto.findById(data)
+  console.log("producto", producto)
  // if(!producto) {
  //   throw new Error("Producto no encontrado");
  // }

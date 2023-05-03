@@ -36,16 +36,6 @@ export const crearDetallePedido = async (req, res) => {
         }
       })
       console.log("producto",producto)
-      await Prisma.producto.update({
-        where:{
-          id: data.productoId
-        },
-        data:{
-          stock:{
-            decrement: data.cantidad
-          }
-        }
-      })
   
       return res.status(201).json({
         content: nuevoDetallePedido,

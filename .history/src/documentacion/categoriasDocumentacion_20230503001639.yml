@@ -8,7 +8,7 @@ paths:
       summary: Muestra las categorias disponibles
       tags: [Category]
       parameters:
-      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/token'
       responses:
         200:
           description: Regresa las categorias registradas
@@ -83,6 +83,8 @@ components:
       name: Authorization
       description: Token de autenticacion en API.
       required: true
+      schema:
+        type: string
   schemas:
     postCategorya:
       type: object

@@ -27,7 +27,7 @@ export const crearPedido = async (req, res) => {
 
 export const crearDetallePedido = async (req, res) => {
     const data = req.body;
-    console.log("data",data)
+    console.log(data)
     try {
       const nuevoDetallePedido = await Prisma.detallePedido.create({ data });
       const producto = await Prisma.producto.findUnique({
@@ -35,17 +35,7 @@ export const crearDetallePedido = async (req, res) => {
           id: data.productoId
         }
       })
-      console.log("producto",producto)
-      await Prisma.producto.update({
-        where:{
-          id: data.productoId
-        },
-        data:{
-          stock:{
-            decrement: data.cantidad
-          }
-        }
-      })
+      console.log(producto)
   
       return res.status(201).json({
         content: nuevoDetallePedido,

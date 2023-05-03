@@ -27,25 +27,9 @@ export const crearPedido = async (req, res) => {
 
 export const crearDetallePedido = async (req, res) => {
     const data = req.body;
-    console.log("data",data)
+  
     try {
       const nuevoDetallePedido = await Prisma.detallePedido.create({ data });
-      const producto = await Prisma.producto.findUnique({
-        where:{
-          id: data.productoId
-        }
-      })
-      console.log("producto",producto)
-      await Prisma.producto.update({
-        where:{
-          id: data.productoId
-        },
-        data:{
-          stock:{
-            decrement: data.cantidad
-          }
-        }
-      })
   
       return res.status(201).json({
         content: nuevoDetallePedido,
@@ -59,4 +43,16 @@ export const crearDetallePedido = async (req, res) => {
     }
   };
 
- 
+export const validarStock = async (req, res) => {
+  const data = req.body;
+
+  const producto = await Prisma.producto.findById(data)
+  if(!producto) {
+    throw new Error("Producto no encontrado");
+  }
+  if (producto.stock < cantidad){
+    throw new Error(`Insuficiente stock: solo hay ${producto.stock}`);
+  }
+
+}
+  

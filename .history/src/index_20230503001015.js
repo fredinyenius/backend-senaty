@@ -30,7 +30,18 @@ const options = {
       ]
   },
   apis: ["./src/documentacion/*.yml"],
-  
+  authAction: {
+    JWT: {
+      name: 'JWT',
+      schema: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'Authorization',
+        description: ''
+      },
+    },
+  }
+      
 };
 const swaggerSpec = swaggerJSDoc(options)
 //-----------------------------------

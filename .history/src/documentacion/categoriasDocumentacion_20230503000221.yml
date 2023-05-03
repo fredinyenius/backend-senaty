@@ -8,7 +8,10 @@ paths:
       summary: Muestra las categorias disponibles
       tags: [Category]
       parameters:
-      - $ref: '#/components/parameters/Authorization'
+        - name: authorization
+          in: header
+          required: true
+          type: string
       responses:
         200:
           description: Regresa las categorias registradas
@@ -73,16 +76,14 @@ paths:
           description: "Internal Server Error."
           content: {}
 components:
-  ApiKeyAuth:
-    type: apiKey
-    in: header
-    name: Authorization 
   parameters:
     Authorization:
       in: header
       name: Authorization
       description: Token de autenticacion en API.
       required: true
+      schema:
+        type: string
   schemas:
     postCategorya:
       type: object
