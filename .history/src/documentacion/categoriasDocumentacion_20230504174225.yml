@@ -90,7 +90,7 @@ components:
       type: object
       properties:
         nombre:
-          type: string
+          type: integer
           description: Nombre de la categoria
         descripcion:
           type: string

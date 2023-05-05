@@ -89,11 +89,11 @@ components:
     postCategorya:
       type: object
       properties:
-        nombre:
-          type: string
+        name:
+          type: integer
           description: Nombre de la categoria
-        descripcion:
-          type: string
+        description:
+          type: int
           description: Descripcion de la categoria
     deleteCategorya:
       type: object

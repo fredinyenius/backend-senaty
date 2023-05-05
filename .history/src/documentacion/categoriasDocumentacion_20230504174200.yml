@@ -90,10 +90,10 @@ components:
       type: object
       properties:
         nombre:
-          type: string
+          type: integer
           description: Nombre de la categoria
         descripcion:
-          type: string
+          type: int
           description: Descripcion de la categoria
     deleteCategorya:
       type: object
