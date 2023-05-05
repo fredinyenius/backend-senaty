@@ -23,42 +23,44 @@ model Usuario {
   password    String
   tipoUsuario TIPO_USUARIO @default(CLIENTE) @map("tipo_usuario")
 
-  pedidos     Pedido?     
+  pedidos Pedido?
+
   @@map("usuarios")
 }
 
 model Categoria {
-  id              Int          @id @default(autoincrement())
-  nombre          String
-  descripcion     String
-  productos       Producto[]
-  
+  id          Int        @id @default(autoincrement())
+  nombre      String
+  descripcion String
+  productos   Producto[]
+
   @@map("categorias")
 }
+
 model Producto {
-  id           Int            @id @default(autoincrement())
-  nombre       String
-  precio       Float
-  stock        Int          
-  disponible   Boolean        @default(true)
-  descripcion  String
-  imagen       String?         @default("https://www.google.com/me.jpg")
-  procedencia  String
-  categoria    Categoria      @relation(fields: [categoriaId], references: [id])
-  categoriaId  Int            @map("categoria_id")
-  pedidos      DetallePedido[]
+  id          Int             @id @default(autoincrement())
+  nombre      String
+  precio      Float
+  stock       Int
+  disponible  Boolean         @default(true)
+  descripcion String
+  imagen      String?         @default("https://www.google.com/me.jpg")
+  procedencia String
+  categoria   Categoria       @relation(fields: [categoriaId], references: [id])
+  categoriaId Int             @map("categoria_id")
+  pedidos     DetallePedido[]
+
   @@map("productos")
 }
 
 model Pedido {
   id             Int             @id @default(autoincrement())
   status         String
-  fecha          DateTime        @map("fecha")
   subTotal       Float
   metodoPago     String
   usuarios       Usuario         @relation(fields: [usuarioId], references: [id])
   usuarioId      Int             @unique @map("usuario_id")
-  descuento      Float           
+  descuento      Float
   detallePedidos DetallePedido[]
 
   @@map("pedidos")
@@ -77,4 +79,3 @@ model DetallePedido {
   //@@id([pedidoId, productoId])
   @@map("detalle_pedidos")
 }
-
