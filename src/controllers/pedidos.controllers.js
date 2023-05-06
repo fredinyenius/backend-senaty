@@ -115,27 +115,28 @@ export const guardarPedido = async (req, res) => {
 
   const nuevoPedido = await Prisma.pedido.create({
     data: {
+
       cliente: pedidos.usuarioId,
       estado: pedidos.status,
       subtotal: pedidos.subTotal,
       metodo: pedidos.metodoPago,
       descuentos: pedidos.descuento,
 
-      detalles: {
-        create: pedidos.detallePedido.map((detalle) => {
-          return {
+      detallePedidos: {
+        createMany: {
+          data:
+          {
             producto: detalle.productoId,
             cantidad: detalle.cantidad,
             precio: detalle.precio,
             total: detalle.precio,
 
-
           }
-        })
+        }
       }
     },
     include: {
-      detallePedidos: true
+      detallePedidos: true,
     }
   });
   return nuevoPedido;
@@ -268,3 +269,70 @@ model CarritoItem {
 }
 
 */
+
+export const darPedido = async (req, res) => {
+
+  //async function addOrderDetail(orderId, detail) {
+  const pedido = await Prisma.pedido.findUnique({
+
+    where: {
+      id: { ...pedido }
+    },
+    include: {
+      detallePedidos: true
+    }
+  });
+
+  const existeDetalle = pedido.detallePedidos.find((d) => d.productoId === detallePedidos.producto);
+
+  if (existeDetalle) {
+    const actualizaDetalle = await Prisma.detallePedidos.update({
+      where: {
+        id: existeDetalle.id
+      },
+      data: {
+        cantidad: existeDetalle.cantidad + detallePedidos.cantidad
+      }
+    });
+    return actualizaDetalle;
+  }
+
+  const nuevoDetalle = await Prisma.detallePedidos.create({
+    data: {
+      producto: detalle.producto,
+      cantidad: detalle.cantidad,
+      precio: detalle.precio,
+      pedido: {
+        connect: {
+          id: ordenId
+        }
+      }
+    }
+  });
+  return nuevoDetalle;
+}
+
+
+
+export const hacerPedido = async (req, res) => {
+
+  const verpedido = await Prisma.usuario.findMany({
+
+    include: {
+      pedido: {
+        select: {
+          usuario: true,
+          status: true,
+          metodoPago: true,
+          usuarioId: true,
+          descuento: true,
+        }
+      }
+    }
+  }
+  );
+  res.json({ verpedido })
+
+}
+
+
