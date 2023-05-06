@@ -1,0 +1,40 @@
+openapi: 3.0.0
+tags:
+name: productos
+description: API para productos
+path:
+/productos:
+get:
+ sumary: Muestra los productos disponibles disponibles
+ tags: [productos]
+ parameters:
+ in: header
+ name: token
+ type: string
+responses:
+  200:
+   description: Productos odtenidos
+   tags: [productos]
+   parameters:
+   - in: header
+   name: token
+   type: string
+   requestbody:
+   content:
+   aplication/json:
+   schema:
+   $ref: "#/components/schemas/productos"
+   responses:
+   200:
+   description: Productos odtenidos
+   components:
+   schemas:
+   productos:
+   type: object
+   properties:
+   name:
+   type: string
+   description: Nombre del producto
+   description:
+   type: string
+   description: Descripcion del producto

@@ -1,0 +1,102 @@
+openapi: 3.0.0
+tags:
+  name: Category
+  description: API para interactura con las categorias
+paths:
+  /categorias:
+    get:
+      summary: Muestra las categorias disponibles
+      tags: [Category]
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          type: string
+      responses:
+        200:
+          description: Regresa las categorias registradas
+    post:
+      summary: Registra una categoria
+      tags: [Category]
+      parameters:
+      - $ref: '#/components/parameters/token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/postCategorya'
+      responses:
+        200:
+          description: Categoria registrada
+    
+
+  /categoria/{id}:
+    get:
+      tags: [Category]
+      summary: "elimine la categoria"
+      description: "\n<p>This API endpoint allows you to delete a consignee.</p>\n"
+      operationId: "delete_consignees_id"
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request."
+          content: {}
+        "404":
+          description: "Not Found."
+          content: {}
+        "500":
+          description: "Internal Server Error."
+          content: {}
+    delete:
+      tags: [Category]
+      summary: "elimine la categoria"
+      description: "\n<p>This API endpoint allows you to delete a consignee.</p>\n"
+      operationId: "delete_consignees_id"
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request."
+          content: {}
+        "404":
+          description: "Not Found."
+          content: {}
+        "500":
+          description: "Internal Server Error."
+          content: {}
+components:
+  parameters:
+    Authorization:
+      in: header
+      name: Authorization
+      description: Token de autenticacion en API.
+      required: true
+      schema:
+        type: string
+  schemas:
+    postCategorya:
+      type: object
+      properties:
+        name:
+          type: integer
+          description: Nombre de la categoria
+        description:
+          type: int
+          description: Descripcion de la categoria
+    deleteCategorya:
+      type: object
+      properties:
+        id:
+          type: int
+          description: Id de la categoria

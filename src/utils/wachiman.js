@@ -2,7 +2,9 @@ import jwt from "jsonwebtoken";
 import { Prisma } from "../prisma.js";
 import prisma from "@prisma/client";
 
-// next > si todo esta correcto al momento de llamar al next este hara la invocacion al otro controlador, este puede ser el controlador final u otro middleware
+// next > si todo esta correcto al momento de llamar al next este hara la invocacion al otro controlador,
+// este puede ser el controlador final u otro middleware
+
 export const validarToken = async (req, res, next) => {
   // valido que tenga el header de authorization
   if (!req.headers.authorization) {
@@ -62,3 +64,4 @@ export const esAdmin = async (req, res, next) => {
 
   next();
 };
+

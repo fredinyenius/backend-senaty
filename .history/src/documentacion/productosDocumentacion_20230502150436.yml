@@ -1,0 +1,97 @@
+openapi: 3.0.0
+tags:
+  name: Productos
+  description: API para interactura con los productos
+paths:
+  /productos:
+    get:
+      summary: Muestra las productos disponibles
+      tags: [Product]
+      parameters:
+        - in: header
+          name: token
+          type: string
+      responses:
+        200:
+          description: Regresa las productos registrados
+    post:
+      summary: Registra un producto
+      tags: [Product]
+      parameters:
+        - in: header
+          name: token
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/postProducto'
+      responses:
+        200:
+          description: producto registrado
+    
+                
+    
+  /producto/{id}:
+    get:
+      tags: [Product]
+      summary: "mostre el producto"
+      description: "\n<p>This API endpoint allows you to delete a consignee.</p>\n"
+      operationId: "get_consignees_id"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request."
+          content: {}
+        "404":
+          description: "Not Found."
+          content: {}
+        "500":
+          description: "Internal Server Error."
+          content: {}
+    delete:
+      tags: [Product]
+      summary: "elimine el producto"
+      description: "\n<p>This API endpoint allows you to delete a consignee.</p>\n"
+      operationId: "delete_consignees_id"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request."
+          content: {}
+        "404":
+          description: "Not Found."
+          content: {}
+        "500":
+          description: "Internal Server Error."
+          content: {}
+components:
+  schemas:
+    registro:
+      type: object
+      properties:
+         name:
+          type: integer
+          description: Nombre de la producto
+        description:
+          type: int
+          description: Mensaje del servidor
+    login:
+      type: object
+      properties:
+          email:
+          type: string
+          format: email
+          password:
+          type: string
+    

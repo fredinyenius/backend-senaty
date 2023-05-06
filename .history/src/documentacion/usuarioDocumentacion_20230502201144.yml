@@ -1,0 +1,108 @@
+openapi: 3.0.0
+tags:
+  name: User
+  description: API para interactura con los usuarios
+paths:
+  /listar:
+    get:
+      summary: Returns a list of users.
+      tags: [User]
+      operationID: profile
+      parameters:
+      - $ref: '#/components/parameters/token'  
+      responses:
+          200:
+            description: Regresa los datos del usuario actual
+  /registro:
+    post:
+      summary: Registra al usuario en la API
+      tags: [User]
+      operationID: signup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userSignIn'
+      responses:
+        200:
+          description: Usuario registrado exitosamente
+        403:
+          description: Las contraseñas no coinciden
+        401:
+          description: El correo ha sido previamente registrado
+  
+  /login:
+    post:
+      summary: Autentica al usuario en la API
+      tags: [User]
+      operationID: login
+      requestBody:
+        description: Para poder hacer uso de este endpoint debe existir un usuario previamente registrado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userLogin'
+      responses:
+        200:
+          description: El usuario ha sido autenticado
+          headers:
+            token:
+              description: El token sera utilizado para interactuar con endpoints protegidos
+              type: string
+        404:
+          description: El email no esta registrado
+        403:
+          description: La contraseña es incorrecta
+  /cerrarSesion:
+    put:
+      summary: Finaliza la sesion actual del usuario
+      tags: [User]
+      operationID: logout
+      parameters:
+        - in: header
+          name: token
+          type: string
+      responses:
+        200:
+          description: Actualiza el token del usuario a null
+components:
+  parameters:
+    token:
+      in: header
+      name: token
+      description: Token de autenticaciÃ³n en API.
+      required: true
+      schema:
+        type: string
+  schemas:
+    serverResponse:
+      type: object
+      properties:
+        server:
+          type: string
+          description: Mensaje del servidor
+    userLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    userSignIn:
+      type: object
+      properties:
+        nombre:
+          type: string
+        apellido:
+          type: string
+        correo:
+          type: string
+          format: email
+        password:
+          type: string
+        tipoUsuario:
+          type: string
+        

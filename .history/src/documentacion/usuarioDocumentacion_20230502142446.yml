@@ -1,0 +1,66 @@
+openapi: 3.0.0
+tags:
+  name: User
+  description: API para interactura con los usuarios
+paths:
+  /registro:
+     post:
+      summary: registrar el usuario en la API
+      tags: [usuario]
+      parameters:
+        - in: header
+          name: token
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registro'
+      responses:
+      200:
+          description: El usuario ha registrado
+         
+  /login:
+    post:
+      summary: Autentica al usuario en la API
+      tags: [usuario]
+      operationID: login
+      requestBody:
+        description: Para poder hacer uso de este endpoint debe existir un usuario previamente registrado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        200:
+          description: El usuario ha sido autenticado
+          headers:
+            token:
+              description: El token sera utilizado para interactuar con endpoints protegidos
+              type: string
+        404:
+          description: El email no esta registrado
+        403:
+          description: La contraseña es incorrecta
+  
+components:
+  schemas:
+    registro:
+      type: objectr
+      properties:
+         name:
+          type: integer
+          description: Nombre de la producto
+        description:
+          type: int
+          description: Mensaje del servidor
+    login:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    

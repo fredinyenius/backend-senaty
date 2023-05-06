@@ -1,0 +1,50 @@
+openapi: 3.0.0
+tags:
+  name: User
+  description: API para interactura con los usuarios
+paths:
+  /resgistro:
+    get:
+      summary: Returns a list of users.
+      tags: [User]
+      operationID: profile
+      parameters:
+        - in: header
+          name: token
+          type: string
+      responses:
+          200:
+            description: Regresa los datos del usuario actual  
+  /login:
+    post:
+      summary: Autentica al usuario en la API
+      tags: [usuario]
+      operationID: login
+      requestBody:
+        description: Para poder hacer uso de este endpoint debe existir un usuario previamente registrado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        200:
+          description: El usuario ha sido autenticado
+          headers:
+            token:
+              description: El token sera utilizado para interactuar con endpoints protegidos
+              type: string
+        404:
+          description: El email no esta registrado
+        403:
+          description: La contraseña es incorrecta
+  
+components:
+  schemas:
+    serverResponse:
+      type: object
+      properties:
+        server:
+          type: string
+          description: Mensaje del servidor
+   
