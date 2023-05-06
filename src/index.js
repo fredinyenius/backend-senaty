@@ -12,31 +12,31 @@ import dotenv from "dotenv";
 // utilizando todas las variables definidas en el archivo .env como si fueran variables de entorno
 import swaggerJSDoc from "swagger-jsdoc";
 
-import  swaggerUi  from "swagger-ui-express";
+import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 
 //Swagger
 const options = {
-  definition : {
-      openapi: "3.0.0",
-      info: { 
-          title: "Tienda API", version: "1.0.0"
-      },
-      servers: [{
-          url:"http://localhost:3000"
-      },
-          
-      ]
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Tienda API", version: "1.0.0"
+    },
+    servers: [{
+      url: "http://localhost:3000"
+    },
+
+    ]
   },
   apis: ["./src/documentacion/*.yml"],
-  
+
 };
 const swaggerSpec = swaggerJSDoc(options)
 //-----------------------------------
 
 const servidor = express();
-const PORT = 3000;
+const PORT = process.env.PORT ?? 3000;
 
 servidor.use(cors());
 servidor.use(express.json());
@@ -48,9 +48,9 @@ servidor.use(categoriaRouter);
 servidor.use(imagenRouter);
 servidor.use(pedidoRouter);
 
-servidor.use('/api',productoRouter);
+servidor.use('/api', productoRouter);
 servidor.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-    
+
 servidor.get("/", (req, res) => {
   res.set("Welcome to my api")
 });

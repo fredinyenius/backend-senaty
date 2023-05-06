@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,11 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum TIPO_USUARIO {
-  ADMIN
-  CLIENTE
-}
-
 model Usuario {
   id          Int          @id @default(autoincrement())
   nombre      String
@@ -22,8 +14,7 @@ model Usuario {
   correo      String       @unique
   password    String
   tipoUsuario TIPO_USUARIO @default(CLIENTE) @map("tipo_usuario")
-
-  pedidos Pedido?
+  pedidos     Pedido?
 
   @@map("usuarios")
 }
@@ -46,9 +37,10 @@ model Producto {
   descripcion String
   imagen      String?         @default("https://www.google.com/me.jpg")
   procedencia String
-  categoria   Categoria       @relation(fields: [categoriaId], references: [id])
   categoriaId Int             @map("categoria_id")
+  slug        String?
   pedidos     DetallePedido[]
+  categoria   Categoria       @relation(fields: [categoriaId], references: [id])
 
   @@map("productos")
 }
@@ -56,12 +48,13 @@ model Producto {
 model Pedido {
   id             Int             @id @default(autoincrement())
   status         String
-  subTotal       Float
   metodoPago     String
-  usuarios       Usuario         @relation(fields: [usuarioId], references: [id])
+  fecha          DateTime        @map("fecha")
   usuarioId      Int             @unique @map("usuario_id")
+  subTotal       Float
   descuento      Float
   detallePedidos DetallePedido[]
+  usuarios       Usuario         @relation(fields: [usuarioId], references: [id])
 
   @@map("pedidos")
 }
@@ -69,13 +62,17 @@ model Pedido {
 model DetallePedido {
   id         Int      @id @default(autoincrement())
   cantidad   Int
+  pedidoId   Int      @map("pedido_id")
+  productoId Int      @map("producto_id")
   precio     Float
   total      Float
   pedido     Pedido   @relation(fields: [pedidoId], references: [id])
-  pedidoId   Int      @map("pedido_id")
   producto   Producto @relation(fields: [productoId], references: [id])
-  productoId Int      @map("producto_id")
 
-  //@@id([pedidoId, productoId])
   @@map("detalle_pedidos")
+}
+
+enum TIPO_USUARIO {
+  ADMIN
+  CLIENTE
 }
