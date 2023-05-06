@@ -52,7 +52,7 @@ servidor.use('/api', productoRouter);
 servidor.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 servidor.get("/", (req, res) => {
-  res.set("Welcome to my api")
+  res.json({ message: "Welcome to my api" })
 });
 
 servidor.listen(PORT, () => {
