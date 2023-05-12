@@ -30,9 +30,10 @@ CREATE TABLE "productos" (
     "stock" INTEGER NOT NULL,
     "disponible" BOOLEAN NOT NULL DEFAULT true,
     "descripcion" TEXT NOT NULL,
-    "imagen" TEXT NOT NULL,
+    "imagen" TEXT DEFAULT 'https://www.google.com/me.jpg',
     "procedencia" TEXT NOT NULL,
     "categoria_id" INTEGER NOT NULL,
+    "slug" TEXT,
 
     CONSTRAINT "productos_pkey" PRIMARY KEY ("id")
 );
@@ -41,10 +42,10 @@ CREATE TABLE "productos" (
 CREATE TABLE "pedidos" (
     "id" SERIAL NOT NULL,
     "status" TEXT NOT NULL,
-    "fecha" TIMESTAMP(3) NOT NULL,
-    "total" INTEGER NOT NULL,
     "metodoPago" TEXT NOT NULL,
+    "fecha" TIMESTAMP(3) NOT NULL,
     "usuario_id" INTEGER NOT NULL,
+    "subTotal" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "pedidos_pkey" PRIMARY KEY ("id")
 );
@@ -52,15 +53,20 @@ CREATE TABLE "pedidos" (
 -- CreateTable
 CREATE TABLE "detalle_pedidos" (
     "id" SERIAL NOT NULL,
-    "cantidad" DOUBLE PRECISION NOT NULL,
+    "cantidad" INTEGER NOT NULL,
     "pedido_id" INTEGER NOT NULL,
     "producto_id" INTEGER NOT NULL,
+    "precio" DOUBLE PRECISION NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "detalle_pedidos_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "usuarios_correo_key" ON "usuarios"("correo");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "pedidos_usuario_id_key" ON "pedidos"("usuario_id");
 
 -- AddForeignKey
 ALTER TABLE "productos" ADD CONSTRAINT "productos_categoria_id_fkey" FOREIGN KEY ("categoria_id") REFERENCES "categorias"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
