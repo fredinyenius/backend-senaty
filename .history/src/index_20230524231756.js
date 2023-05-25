@@ -2,7 +2,6 @@ import stripe from "stripe";
 import express from "express";
 import cors from "cors";
 
-
 import { usuarioRouter } from "./routes/usuarios.routes.js";
 import { productoRouter } from "./routes/productos.routes.js";
 import { categoriaRouter } from "./routes/categorias.routes.js";
@@ -17,9 +16,6 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
-
- stripe(process.env.TOKEN_STRIPE);
-
 
 //Swagger
 const options = {
@@ -57,24 +53,9 @@ servidor.use(pedidoRouter);
 servidor.use('/api', productoRouter);
 servidor.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-
-
-servidor.post('/api/checkout', async (req,res) => {
-
-  const { id, totalPrice} = req.body
-
-  const payment =  await stripe.paymentIntents.create({
-
-    totalPrice,
-    currency: "USD",
-    description: "Gamint Keyboard",
-    payment_method: id,
-    confirm: true
-  })
-
-  console.log(payment)
-
-  res.send({message: 'Succesfull payment'})
+servidor.post('/api/checkout', (req,res) => {
+  console.log(req.body)
+  res.send('received')
 });
 servidor.get("/", (req, res) => {
   res.json({ message: "Welcome to my api" })

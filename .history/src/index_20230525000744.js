@@ -61,11 +61,11 @@ servidor.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 servidor.post('/api/checkout', async (req,res) => {
 
-  const { id, totalPrice} = req.body
+  const { id, totalPrecio} = req.body
 
   const payment =  await stripe.paymentIntents.create({
 
-    totalPrice,
+    totalPrecio,
     currency: "USD",
     description: "Gamint Keyboard",
     payment_method: id,

@@ -18,7 +18,7 @@ import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 
- stripe(process.env.TOKEN_STRIPE);
+const stripe = new Stripe(process.env.TOKEN_STRIPE)
 
 
 //Swagger
@@ -57,15 +57,13 @@ servidor.use(pedidoRouter);
 servidor.use('/api', productoRouter);
 servidor.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-
-
 servidor.post('/api/checkout', async (req,res) => {
 
-  const { id, totalPrice} = req.body
+  const { id, totalPrecio} = req.body
 
   const payment =  await stripe.paymentIntents.create({
 
-    totalPrice,
+    totalPrecio,
     currency: "USD",
     description: "Gamint Keyboard",
     payment_method: id,

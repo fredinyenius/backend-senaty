@@ -2,6 +2,7 @@ import stripe from "stripe";
 import express from "express";
 import cors from "cors";
 
+const stripe = new Stripe("sk_test_51N9HckIpxHMbLOntuAHHZRgaYFDAFZVkFDT8gO96Fda1pgFCfbjm1GEftYrbTW4OPgREYcGmOeCVYJWtaZuTK6Bq00BRfIY2mN")
 
 import { usuarioRouter } from "./routes/usuarios.routes.js";
 import { productoRouter } from "./routes/productos.routes.js";
@@ -18,7 +19,6 @@ import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 
- stripe(process.env.TOKEN_STRIPE);
 
 
 //Swagger
@@ -57,15 +57,13 @@ servidor.use(pedidoRouter);
 servidor.use('/api', productoRouter);
 servidor.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-
-
 servidor.post('/api/checkout', async (req,res) => {
 
-  const { id, totalPrice} = req.body
+  const { id, totalPrecio} = req.body
 
   const payment =  await stripe.paymentIntents.create({
 
-    totalPrice,
+    totalPrecio,
     currency: "USD",
     description: "Gamint Keyboard",
     payment_method: id,
