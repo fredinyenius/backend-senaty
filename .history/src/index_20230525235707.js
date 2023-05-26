@@ -61,11 +61,11 @@ servidor.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 servidor.post('/api/checkout', async (req,res) => {
  try {
-  const { id, amount} = req.body
+  const { id, totalPrice} = req.body
 
   const payment =  await stripe.paymentIntents.create({
 
-    amount,
+    totalPrice,
     currency: "USD",
     description: "Productos",
     payment_method: id,

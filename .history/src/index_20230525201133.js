@@ -18,7 +18,7 @@ import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 
-const stripe = new Stripe("sk_test_51N9HckIpxHMbLOntuAHHZRgaYFDAFZVkFDT8gO96Fda1pgFCfbjm1GEftYrbTW4OPgREYcGmOeCVYJWtaZuTK6Bq00BRfIY2mN");
+stripe = new Stripe("sk_test_51N9HckIpxHMbLOntuAHHZRgaYFDAFZVkFDT8gO96Fda1pgFCfbjm1GEftYrbTW4OPgREYcGmOeCVYJWtaZuTK6Bq00BRfIY2mN");
 
 
 //Swagger
@@ -60,27 +60,22 @@ servidor.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 servidor.post('/api/checkout', async (req,res) => {
- try {
-  const { id, amount} = req.body
+
+  const { id, totalPrice} = req.body
 
   const payment =  await stripe.paymentIntents.create({
 
-    amount,
+    totalPrice,
     currency: "USD",
-    description: "Productos",
+    description: "Gamint Keyboard",
     payment_method: id,
     confirm: true
   })
 
   console.log(payment)
+
   res.send({message: 'Succesfull payment'})
-
- } catch (error) {
-  console.log(error);
-  res.json({message: error.raw.message});
- }
 });
-
 servidor.get("/", (req, res) => {
   res.json({ message: "Welcome to my api" })
 });
