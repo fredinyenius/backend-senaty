@@ -10,8 +10,8 @@ export const registroUsuario = async (req, res) => {
     const password = bcrypt.hashSync(data.password, 10);
 
     const usuarioCreado = await Prisma.usuario.create({
-      data: { ...data, password },   
-    })  
+      data: { ...data, password },
+    })
     res.json(usuarioCreado)
   } catch (error) {
     console.error(error)
@@ -44,7 +44,11 @@ export const loginUsuario = async (req, res) => {
     if (resultado === true) {
       // jti > identificador de la token (a quien le pertenece)
       const token = jwt.sign(
-        { jti: usuarioEncontrado.id, nombre: usuarioEncontrado.nombre },
+        {
+          jti: usuarioEncontrado.id,
+          nombre: usuarioEncontrado.nombre,
+          tipo: usuarioEncontrado.tipoUSuario
+        },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
@@ -65,12 +69,12 @@ export const loginUsuario = async (req, res) => {
 
 export const cerrarSesion = async (req, res) => {
   // agregarlo
-  const usuarios = await Prisma.usuario.findIdAndUpdate({token: null});
+  const usuarios = await Prisma.usuario.findIdAndUpdate({ token: null });
   res.json(usuarios);
-  
-    return res.status(201).json({
-      content: usuarios,
-      message: "sesion cerrada",
-    });
+
+  return res.status(201).json({
+    content: usuarios,
+    message: "sesion cerrada",
+  });
 
 };
