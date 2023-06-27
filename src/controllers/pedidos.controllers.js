@@ -125,7 +125,7 @@ export const reporteProductosMasVendidos = async (req, res) => {
       FROM pedidos p
       INNER JOIN detalle_pedidos dp ON p.id = dp.pedido_id
       INNER JOIN productos po ON po.id = dp.producto_id
-      WHERE p.status = 'vendido' AND (p.fecha >= ${startDate} AND p.fecha < ${endDate})
+      WHERE p.status = 'bueno' AND (p.fecha >= ${startDate} AND p.fecha < ${endDate})
       GROUP BY (po.id, po.nombre);
     `
     return res.json({
