@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { crearPedido, crearDetallePedido, listarPedido} from "../controllers/pedidos.controllers.js";
+import { crearPedido, crearDetallePedido, listarPedido, reporteProductosMasVendidos } from "../controllers/pedidos.controllers.js";
 //import { validarStock } from "../utils/wachiman.js";
 
 export const pedidoRouter = Router();
@@ -22,3 +22,4 @@ pedidoRouter.post("/hacer-pedido", hacerPedido);
 pedidoRouter.post("/pedidos", crearPedido);
 pedidoRouter.get("/pedidos", listarPedido);
 pedidoRouter.post("/detallePedidos", crearDetallePedido);
+pedidoRouter.get('/reporte-productos', reporteProductosMasVendidos);
