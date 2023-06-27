@@ -82,7 +82,7 @@ servidor.post('/api/checkout', async (req,res) => {
 });
 
 servidor.get("/", (req, res) => {
-  res.json({ message: "Welcome to my api" })
+  res.json({ message: "Welcome tu papá! my api" })
 });
 
 servidor.listen(PORT, () => {
