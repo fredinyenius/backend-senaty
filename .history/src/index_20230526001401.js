@@ -18,7 +18,7 @@ import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 
-const stripe = Stripe(process.env.TOKEN_STRIPE);
+const stripe = new Stripe(import.meta.process.env.TOKEN_STRIPE);
 
 
 //Swagger
