@@ -118,7 +118,6 @@ export const reporteProductosMasVendidos = async (req, res) => {
     })
   }
   try {
-    console.log(req.query)
     const startDate = parseDate(req.query.startDate)
     const endDate = parseDate(req.query.endDate)
     const result = await Prisma.$queryRaw`
@@ -134,12 +133,10 @@ export const reporteProductosMasVendidos = async (req, res) => {
       data: result
     })
   } catch (error) {
-    console.log(error)
     return res.status(400).json({
       message: "Error al obtener reporte",
       content: error.message,
     });
-    
   }
 
 }

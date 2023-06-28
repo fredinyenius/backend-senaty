@@ -103,3 +103,43 @@ export const listarPedido = async (req, res) => {
   });
 
 };
+
+export const reporteProductosMasVendidos = async (req, res) => {
+  //format yyyy-mm-dd
+  const parseDate = (dateString = "") => {
+    const [year, month, day] = dateString.split('-')
+    return new Date(year, month - 1, day)
+  }
+  const stringifyRawQuery = (jsonObject) => {
+    return JSON.stringify(jsonObject, (key, value) => {
+      if (typeof value === 'bigint') {
+        return Number(value)
+      }
+    })
+  }
+  try {
+    console.log(req.query)
+    const startDate = parseDate(req.query.startDate)
+    const endDate = parseDate(req.query.endDate)
+    const result = await Prisma.$queryRaw`
+      SELECT po.id, po.nombre, SUM(dp.cantidad)::integer AS sumCantidad
+      FROM pedidos p
+      INNER JOIN detalle_pedidos dp ON p.id = dp.pedido_id
+      INNER JOIN productos po ON po.id = dp.producto_id
+      WHERE p.status = 'bueno' AND (p.fecha >= ${startDate} AND p.fecha < ${endDate})
+      GROUP BY (po.id, po.nombre);
+    `
+    console.log(result)
+    return res.json({
+      data: result
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({
+      message: "Error al obtener reporte",
+      content: error.message,
+    });
+    
+  }
+
+}
